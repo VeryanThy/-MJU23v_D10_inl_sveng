@@ -17,8 +17,8 @@
             }
         }
         static void Main(string[] args)
-        {
-            string defaultFile = "..\\..\\..\\dict\\sweeng.lis";
+        {   //FIXME not universal file path
+            string defaultFile = "../../../dict/sweeng.lis";
             Console.WriteLine("Welcome to the dictionary app!");
             do
             {
@@ -29,6 +29,8 @@
                 {
                     Console.WriteLine("Goodbye!");
                 }
+              
+                //FIXME File not found exception for invalid filename. fix 
                 else if (command == "load")
                 {
                     if(argument.Length == 2)
@@ -61,14 +63,14 @@
                     }
                 }
                 else if (command == "list")
-                {
+                {//FIXME null reference exception thrown if nothing has been loaded
                     foreach(SweEngGloss gloss in dictionary)
                     {
                         Console.WriteLine($"{gloss.word_swe,-10}  - {gloss.word_eng,-10}");
                     }
                 }
                 else if (command == "new")
-                {
+                {//FIXME null reference exception thrown if nothing has been loaded
                     if (argument.Length == 3)
                     {
                         dictionary.Add(new SweEngGloss(argument[1], argument[2]));
@@ -76,14 +78,16 @@
                     else if(argument.Length == 1)
                     {
                         Console.WriteLine("Write word in Swedish: ");
-                        string s = Console.ReadLine();
+                        string s = Console.ReadLine().Trim();
                         Console.Write("Write word in English: ");
-                        string e = Console.ReadLine();
+                        string e = Console.ReadLine().Trim();
                         dictionary.Add(new SweEngGloss(s, e));
                     }
                 }
                 else if (command == "delete")
-                {
+                //FIXME null reference exception thrown if nothing has been loaded
+                {   //FIXME crashes if argument not 3 or 1
+                    //FIXME crashes is english and swedish words dont match.
                     if (argument.Length == 3)
                     {
                         int index = -1;
@@ -97,9 +101,9 @@
                     else if (argument.Length == 1)
                     {
                         Console.WriteLine("Write word in Swedish: ");
-                        string s = Console.ReadLine();
+                        string s = Console.ReadLine().Trim();
                         Console.Write("Write word in English: ");
-                        string e = Console.ReadLine();
+                        string e = Console.ReadLine().Trim();
                         int index = -1;
                         for (int i = 0; i < dictionary.Count; i++)
                         {
@@ -111,7 +115,7 @@
                     }
                 }
                 else if (command == "translate")
-                {
+                {//FIXME null reference exception thrown if nothing has been loaded
                     if (argument.Length == 2)
                     {
                         foreach(SweEngGloss gloss in dictionary)
@@ -125,7 +129,7 @@
                     else if (argument.Length == 1)
                     {
                         Console.WriteLine("Write word to be translated: ");
-                        string s = Console.ReadLine();
+                        string s = Console.ReadLine().Trim();
                         foreach (SweEngGloss gloss in dictionary)
                         {
                             if (gloss.word_swe == s)
